@@ -2,6 +2,7 @@
 #include "BinaryReader.h"
 #include <fstream>
 #include <filesystem>
+#include "ErrorLogger.h"
 
 // define fs namespace for convenience
 namespace fs = std::experimental::filesystem;
@@ -28,8 +29,29 @@ BinaryReader::BinaryReader(const char* _fileName)
 
 }
 
+BinaryReader::BinaryReader(std::string _fileName)
+{
+
+	//increment number of instances
+	s_instances += 1;
+
+	this->m_fileName = _fileName;
+
+	// extract the current path
+	fs::path path_currentPath = fs::current_path();
+	this->m_filePath = path_currentPath.u8string();
+
+	// add a backslash at the end of path
+	this->m_filePath += "\\";
+
+}
+
 // constructor
 BinaryReader::BinaryReader(const char* _fileName, const char* _filePath)
+	: m_fileName(_fileName), m_filePath(_filePath)
+{}
+
+BinaryReader::BinaryReader(std::string _fileName, std::string _filePath)
 	: m_fileName(_fileName), m_filePath(_filePath)
 {}
 
@@ -54,7 +76,7 @@ void BinaryReader::setfilePath(const char* _filePath)
 }
 
 
-bool BinaryReader::customRead(std::streampos start, std::streampos end)
+bool BinaryReader::customRead(std::streampos start, size_t size)
 {
 
 	// define the istream
@@ -65,20 +87,21 @@ bool BinaryReader::customRead(std::streampos start, std::streampos end)
 
 	// check whether the file is open
 	if (!myFile.is_open())
+	{
+		ErrorLogger::Log("Cannot Read or Find the file");
 		return false;
+
+	}
 
 
 	// return to starting position
 	myFile.seekg(start);
 
-	// size of the buffer
-	size_t buffer_size = static_cast<size_t>(end - start);
 
-
-	this->p_buffer = new char[buffer_size];
+	this->p_buffer = new char[size];
 
 	//read file and store it into buffer 
-	myFile.read(this->p_buffer, buffer_size);
+	myFile.read(this->p_buffer, size);
 
 	// close the file
 	myFile.close();

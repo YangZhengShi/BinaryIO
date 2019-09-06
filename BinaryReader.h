@@ -16,9 +16,15 @@ private:
 public:
 	BinaryReader();
 
+	// Destructor
+	~BinaryReader()
+	{
+		this->clean_buffer();
+	}
+
 	// fill a stream of characters into buffer
 	bool read();
-	bool customRead(std::streampos start, std::streampos end);
+	bool customRead(std::streampos start, size_t size);
 
 	//clean buffer vector
 	void clean_buffer();
@@ -26,12 +32,14 @@ public:
 	// s_instance keeps track of the instances
 	static unsigned int s_instances;
 
-	// constructor assuming the path of the cpp as the filepath 
+	// constructor assuming the path of the cpp as the filepath
 	BinaryReader(const char* _fileName);
+	BinaryReader(std::string _fileName);
+
 
 	// constructor
 	BinaryReader(const char* _fileName, const char* _filePath);
-
+	BinaryReader(std::string _fileName, std::string _filePath);
 
 	const char* getfileName() const;
 	const char* getfilePath() const;
