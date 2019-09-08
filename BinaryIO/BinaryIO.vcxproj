@@ -126,13 +126,18 @@
     <ClInclude Include="..\BinaryReader.h" />
     <ClInclude Include="..\BinaryWriter.h" />
     <ClInclude Include="..\ErrorLogger.h" />
+    <ClInclude Include="..\linearIndex.h" />
+    <ClInclude Include="..\StressField.h" />
+    <ClInclude Include="..\StressFieldOptions.h" />
     <ClInclude Include="..\StressFieldReader.h" />
+    <ClInclude Include="..\StressTensor.h" />
     <ClInclude Include="..\StringConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BinaryReader.cpp" />
     <ClCompile Include="..\BinaryWriter.cpp" />
     <ClCompile Include="..\ErrorLogger.cpp" />
+    <ClCompile Include="..\StressField.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

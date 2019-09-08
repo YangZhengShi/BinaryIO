@@ -6,7 +6,7 @@
 class BinaryReader
 {
 
-private:
+protected:
 
 	std::string m_fileName;
 	std::string m_filePath;
@@ -14,6 +14,19 @@ private:
 	char* p_buffer;
 
 public:
+
+
+	void setFileName(std::string _fileName)
+	{
+		this->m_fileName = _fileName;
+	}
+
+	void setFilePath(std::string _filePath)
+	{
+		this->m_filePath = _filePath;
+	}
+
+
 	BinaryReader();
 
 	// Destructor

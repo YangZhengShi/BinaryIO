@@ -36,6 +36,18 @@
     <ClInclude Include="..\StringConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\linearIndex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StressField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StressFieldOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\StressTensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BinaryReader.cpp">
@@ -48,6 +60,9 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="..\ErrorLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\StressField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
