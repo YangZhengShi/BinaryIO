@@ -48,6 +48,9 @@
     <ClInclude Include="..\StressTensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\HelperSymmetricMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BinaryReader.cpp">

@@ -87,9 +87,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\boost_1_70_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>C:\boost_1_70_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,6 +128,7 @@
     <ClInclude Include="..\BinaryReader.h" />
     <ClInclude Include="..\BinaryWriter.h" />
     <ClInclude Include="..\ErrorLogger.h" />
+    <ClInclude Include="..\HelperSymmetricMatrix.h" />
     <ClInclude Include="..\linearIndex.h" />
     <ClInclude Include="..\StressField.h" />
     <ClInclude Include="..\StressFieldOptions.h" />

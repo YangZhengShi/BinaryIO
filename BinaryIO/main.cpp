@@ -2,6 +2,9 @@
 #include "..//StressFieldReader.h"
 #include <iostream>
 #include "..///StressField.h"
+#include <boost/math/tools/roots.hpp>
+
+
 int main(int argc, char** argv)
 {
 	int gridSize[3] = { 51,51,101 };
@@ -13,11 +16,14 @@ int main(int argc, char** argv)
 	stressField.setStressFieldOptions(SFOs);
 	stressField.readField();
 
-
+	
 
 	for (int i = 4; i < 50; i++)
 	{
-		std::cout << stressField.getTensor(i,0,0).sigma_x<<"\n";
+		std::cout << stressField.getEigenvalues(i, 0, 0)[0] << "\n";
+		std::cout << stressField.getEigenvalues(i, 0, 0)[1] << "\n";
+		std::cout << stressField.getEigenvalues(i, 0, 0)[2] << "\n";
+		std::cout <<"\n";
 	}
 
 

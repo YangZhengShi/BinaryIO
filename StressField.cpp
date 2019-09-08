@@ -1,6 +1,8 @@
 #include "StressField.h"
 #include "linearIndex.h"
-
+#include "HelperSymmetricMatrix.h"
+#include <boost/qvm/mat_operations.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 void StressField::readField()
 {
 	this->stressFieldReader.setFileName(this->stressFieldOptions.fileName);
@@ -82,4 +84,88 @@ StressTensor StressField::getTensor(const float & x, const float & y, const floa
 		this->field[linearIndex(edges[7], dim)] * delta_x * delta_y * delta_z;
 
 	return stressTensor;
+}
+
+
+double * StressField::getEigenvalues(const float& x, const float& y, const float& z)
+{
+	StressTensor stressTensor = this->getTensor(x, y, z);
+
+	static double eigen[3] = { 0.0f,0.0f,0.0f };
+
+
+	//https://en.wikipedia.org/wiki/Eigenvalue_algorithm
+	//Given a real symmetric 3x3 matrix A, compute the eigenvalues
+	// Note that acosand cos operate on angles in radians
+
+	double p1 = pow(stressTensor.tau_xy, 2.0) + pow(stressTensor.tau_zx, 2.0) + pow(stressTensor.tau_zy, 2.0);
+	if (p1 == 0)// A is diagonal.
+	{
+		eigen[0] = stressTensor.sigma_x;
+		eigen[1] = stressTensor.sigma_y;
+		eigen[2] = stressTensor.sigma_z;
+	}
+	else
+	{
+		double trace = stressTensor.sigma_x + stressTensor.sigma_y + stressTensor.sigma_z;
+		double q = trace / 3.0;
+		double p2 =
+			pow((stressTensor.sigma_x - q), 2.0) +
+			pow((stressTensor.sigma_y - q), 2.0) +
+			pow((stressTensor.sigma_z - q), 2.0) +
+			2.0 * p1;
+
+		double p = sqrt(p2 / 6.0);
+		StressTensor B = (1 / p) * (stressTensor - q * IDENTITY);
+		double r = determinant(B) / 2.0;
+		double phi = 0.0f;
+
+		if (r <= -1)
+		{
+			phi = PI / 3.0;
+		}
+		else if(r >= 1)
+		{
+			phi = 0.0f;
+		}
+		else
+		{
+			phi = acos(r) / 3;
+
+		}
+
+		// the eigenvalues satisfy eig3 <= eig2 <= eig1
+
+		eigen[0] = (q + 2.0f * p * cos(phi));
+		eigen[1] = (q + 2.0f * p * cos(phi + (2.0f * PI / 3.0f)));
+		eigen[2] = (3.0f * q - eigen[1] - eigen[2]);
+
+	}
+
+	return eigen;
+}
+
+
+double* StressField::getEigenvectors(const float& x, const float& y, const float& z)
+{
+	StressTensor stressTensor = this->getTensor(x, y, z);
+	boost::numeric::ublas::matrix<double> b_stressTensor(3, 3);
+
+	b_stressTensor(0, 0) = stressTensor.sigma_x;
+	b_stressTensor(1, 1) = stressTensor.sigma_y;
+	b_stressTensor(2, 2) = stressTensor.sigma_z;
+
+	b_stressTensor(0, 1) = stressTensor.tau_xy;
+	b_stressTensor(1, 0) = stressTensor.tau_xy;
+
+	b_stressTensor(0, 2) = stressTensor.tau_zx;
+	b_stressTensor(2, 0) = stressTensor.tau_zx;
+
+
+	b_stressTensor(1, 2) = stressTensor.tau_zy;
+	b_stressTensor(2, 1) = stressTensor.tau_zy;
+
+
+
+	boost::qvm::inverse(b_stressTensor);
 }

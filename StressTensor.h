@@ -13,6 +13,10 @@ Stress Tensor:
 	|								|
 
 */
+
+
+#define IDENTITY StressTensor(1.0f,1.0f,1.0f,0,0,0)
+#define PI 3.14159265358979323
 struct StressTensor
 {
 	StressTensor
@@ -87,18 +91,21 @@ inline StressTensor operator*(const StressTensor& lhs, const float & rhs)
 	return result;
 }
 
-inline StressTensor operator*(const float & rhs, const StressTensor& lhs)
+
+
+inline StressTensor operator*(const float& lhs, const StressTensor& rhs)
 {
 	StressTensor result
 	{
-		 lhs.sigma_x * rhs,
-		 lhs.sigma_y * rhs,
-		 lhs.sigma_z * rhs,
+		 rhs.sigma_x * lhs,
+		 rhs.sigma_y * lhs,
+		 rhs.sigma_z * lhs,
 
-		 lhs.tau_xy * rhs,
-		 lhs.tau_zx * rhs,
-		 lhs.tau_zy * rhs
+		 rhs.tau_xy * lhs,
+		 rhs.tau_zx * lhs,
+		 rhs.tau_zy * lhs
 	};
 
 	return result;
 }
+
