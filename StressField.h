@@ -18,9 +18,11 @@ public:
 
 	void readField();
 
-	double * getEigenvalues(const float & x, const float & y, const float & z);
-	
+	double * getEigenvalues(const StressTensor & stressTensor);
+	double* getEigenvalues(const float& x, const float& y, const float& z);
+
 	double* getEigenvectors(const float& x, const float& y, const float& z);
+
 
 	void setStressFieldOptions(StressFieldOptions& SFOs)
 	{

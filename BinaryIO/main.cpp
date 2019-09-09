@@ -2,7 +2,6 @@
 #include "..//StressFieldReader.h"
 #include <iostream>
 #include "..///StressField.h"
-#include <boost/math/tools/roots.hpp>
 
 
 int main(int argc, char** argv)
@@ -20,9 +19,10 @@ int main(int argc, char** argv)
 
 	for (int i = 4; i < 50; i++)
 	{
-		std::cout << stressField.getEigenvalues(i, 0, 0)[0] << "\n";
-		std::cout << stressField.getEigenvalues(i, 0, 0)[1] << "\n";
-		std::cout << stressField.getEigenvalues(i, 0, 0)[2] << "\n";
+
+		std::cout << stressField.getEigenvectors(i, 0, 0)[0] <<"\t";
+		std::cout << stressField.getEigenvectors(i, 0, 0)[1] << "\t";
+		std::cout << stressField.getEigenvectors(i, 0, 0)[2] << "\t";
 		std::cout <<"\n";
 	}
 
